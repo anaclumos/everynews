@@ -1,0 +1,12 @@
+---
+description: Hono.js best practices for building APIs and middleware.
+globs: apps/engine/**/*.(ts|tsx)
+---
+- Use middleware for authentication and logging
+- Implement route handlers using `app.get`, `app.post`, etc.
+- Utilize 'c.env' for environment variables in Cloudflare Workers
+- Structure routes modularly for maintainability
+- Handle errors globally with 'app.onError'
+- Use `c.text()`, `c.json()`, and `c.redirect()` for response handling
+- Leverage caching with 'Cache-Control' or KV storage
+- The LLMs.txt for examples and docs are located at ~/.llms.txt/hono.txt
