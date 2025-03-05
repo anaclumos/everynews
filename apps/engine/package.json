@@ -4,9 +4,11 @@
     "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
-    "better-auth": "^1.1.21",
+    "@types/pg": "^8.11.11",
+    "better-auth": "^1.2.3",
     "drizzle-orm": "^0.40.0",
-    "hono": "^4.7.2"
+    "hono": "^4.7.2",
+    "pg": "^8.13.3"
   },
   "devDependencies": {
     "@types/bun": "latest",
