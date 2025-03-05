@@ -17,13 +17,13 @@
   "linter": { "enabled": true, "rules": { "recommended": false } },
   "javascript": {
     "formatter": {
-      "jsxQuoteStyle": "double",
+      "jsxQuoteStyle": "single",
       "quoteProperties": "asNeeded",
       "trailingCommas": "all",
       "semicolons": "asNeeded",
       "arrowParentheses": "always",
       "bracketSameLine": false,
-      "quoteStyle": "double",
+      "quoteStyle": "single",
       "attributePosition": "auto",
       "bracketSpacing": true
     }
