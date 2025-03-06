@@ -1,6 +1,6 @@
 import { apiReference } from '@scalar/hono-api-reference'
 import { type Swagger } from 'atlassian-openapi'
-import { camelCase, startCase } from 'es-toolkit'
+import { startCase } from 'es-toolkit'
 import { Hono } from 'hono'
 import { describeRoute, generateSpecs } from 'hono-openapi'
 import { resolver } from 'hono-openapi/zod'
@@ -22,7 +22,15 @@ app
   .use(
     'auth/*',
     cors({
-      origin: 'http://localhost:7777',
+      origin: (origin) => {
+        // Allow requests from Vercel preview URLs, localhost, and production domains
+        return origin &&
+          (origin.includes('vercel.app') ||
+            origin.includes('localhost') ||
+            origin === 'https://everynews.com') // Replace with your production domain
+          ? origin
+          : ''
+      },
       allowHeaders: ['Content-Type', 'Authorization'],
       allowMethods: ['POST', 'GET', 'OPTIONS'],
       exposeHeaders: ['Content-Length'],
@@ -77,7 +85,16 @@ app.get('/openapi.json', async (c) => {
       externalDocs: {
         url: 'https://github.com/scalar-labs/scalar',
       },
-      servers: [{ url: 'http://localhost:7777', description: 'Local Server' }],
+      servers: [
+        {
+          url: process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}`
+            : 'http://localhost:3000',
+          description: process.env.VERCEL_URL
+            ? 'Vercel Deployment'
+            : 'Local Server',
+        },
+      ],
     },
   })) as Swagger.SwaggerV3
 
@@ -109,7 +126,5 @@ app.get(
   }),
 )
 
-export default {
-  port: 7777,
-  fetch: app.fetch,
-}
+// Export the app for Vercel
+export default app
