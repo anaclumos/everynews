@@ -1,7 +1,6 @@
 {
   "name": "everynews-engine",
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
     "start": "vercel dev",
     "deploy": "vercel"
   },
@@ -25,6 +24,6 @@
   "devDependencies": {
     "@types/bun": "latest",
     "drizzle-kit": "^0.30.5",
-    "vercel": "^32.4.1"
+    "vercel": "^41.3.2"
   }
 }
