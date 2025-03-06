@@ -1,0 +1,12 @@
+pre-push:
+  commands:
+    biome:
+      name: format & lint
+      run: bun run check
+
+pre-commit:
+  commands:
+    biome:
+      name: format & lint
+      run: bun run check
+      stage_fixed: true

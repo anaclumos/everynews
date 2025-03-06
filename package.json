@@ -17,5 +17,8 @@
     "node": ">=18"
   },
   "packageManager": "bun@1.2.4",
-  "workspaces": ["apps/*", "packages/*"]
+  "workspaces": ["apps/*", "packages/*"],
+  "dependencies": {
+    "lefthook": "^1.11.2"
+  }
 }
