@@ -8,7 +8,11 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:check": "drizzle-kit check",
-    "build": "tsc"
+    "build": "echo 'No Build Needed with Bun. This script is for Turbo and Flightcontrol.'",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "openapi:generate": "bun run src/scripts/generate-openapi.ts"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.3",
@@ -31,6 +35,7 @@
     "@types/bun": "latest",
     "drizzle-kit": "^0.30.5",
     "typescript": "^5.8.2",
-    "vercel": "^41.3.2"
+    "vercel": "^41.3.2",
+    "vitest": "^3.0.8"
   }
 }

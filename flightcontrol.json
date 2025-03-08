@@ -9,7 +9,7 @@
       "services": [
         {
           "id": "everynews-hono-main-server-aOlF8X",
-          "name": "Every.news Hono Main Server",
+          "name": "Every.news Hono",
           "target": {
             "type": "ecs-ec2",
             "clusterInstanceSize": "t3a.nano",
@@ -17,6 +17,9 @@
             "clusterMaxInstances": 10
           },
           "buildType": "nixpacks",
+          "installCommand": "bun install",
+          "buildCommand": "bun run build",
+          "startCommand": "bun run start",
           "cpu": 2,
           "gpu": 0,
           "memory": 0.25,
