@@ -1,0 +1,83 @@
+{
+  "$schema": "https://app.flightcontrol.dev/schema.json",
+  "environments": [
+    {
+      "id": "production",
+      "name": "Production",
+      "region": "ap-northeast-2",
+      "source": { "branch": "main", "pr": false, "trigger": "push" },
+      "services": [
+        {
+          "id": "everynews-hono-main-server-aOlF8X",
+          "name": "Every.news Hono Main Server",
+          "target": {
+            "type": "ecs-ec2",
+            "clusterInstanceSize": "t3a.nano",
+            "clusterMinInstances": 1,
+            "clusterMaxInstances": 10
+          },
+          "buildType": "nixpacks",
+          "cpu": 2,
+          "gpu": 0,
+          "memory": 0.25,
+          "ci": {
+            "type": "ec2",
+            "instanceStorage": 30,
+            "storageThroughput": 125,
+            "storageIops": 3000,
+            "storageType": "gp3"
+          },
+          "containerInsights": false,
+          "minInstances": 1,
+          "maxInstances": 1,
+          "versionHistoryCount": 10,
+          "basePath": "./apps/engine",
+          "privileged": false,
+          "envVariables": {},
+          "autoscaling": {
+            "cpuThreshold": 70,
+            "memoryThreshold": 70,
+            "cooldownTimerSecs": 300,
+            "requestsPerTarget": 500
+          },
+          "includeEnvVariablesInBuild": true,
+          "logging": {
+            "ecsLogsMetadataEnabled": false,
+            "cloudwatchLogsEnabled": true,
+            "envVariables": {}
+          },
+          "healthCheckTimeoutSecs": 4,
+          "healthCheckIntervalSecs": 5,
+          "healthCheckPath": "/",
+          "port": 3000,
+          "stickySessionsEnabled": false,
+          "stickySessionsDurationSecs": 86400,
+          "domain": "api.every.news",
+          "enableCloudfrontSwr": false,
+          "type": "web"
+        },
+        {
+          "id": "everynews-database-PJz8A0",
+          "name": "Every.news Database",
+          "type": "rds",
+          "instanceSize": "db.t4g.micro",
+          "private": false,
+          "storage": 20,
+          "maxStorage": 100,
+          "autoUpgradeMinorVersions": true,
+          "applyChangesImmediately": false,
+          "deletionProtection": false,
+          "connectionStringEnvVarName": "DATABASE_URL",
+          "backupRetentionPeriodInDays": 35,
+          "deleteBackupsWithRdsDeletion": true,
+          "performanceInsights": true,
+          "storageType": "gp3",
+          "multiAvailabilityZones": false,
+          "encryptionAtRest": true,
+          "engine": "postgres",
+          "engineVersion": "16"
+        }
+      ]
+    }
+  ]
+}
