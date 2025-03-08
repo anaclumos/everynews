@@ -25,9 +25,9 @@ app
       origin: (origin) => {
         // Allow requests from preview URLs, localhost, and production domains
         return origin &&
-          (origin.includes('vercel.app') || // Should change to AWS
+          (origin.includes(process.env.PREVIEW_URL!) ||
             origin.includes('localhost') ||
-            origin === 'https://everynews.com')
+            origin === process.env.PRODUCTION_URL)
           ? origin
           : ''
       },
@@ -87,11 +87,11 @@ app.get('/openapi.json', async (c) => {
       },
       servers: [
         {
-          url: process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}`
+          url: process.env.PRODUCTION_URL
+            ? `https://${process.env.PRODUCTION_URL}`
             : 'http://localhost:3000',
-          description: process.env.VERCEL_URL
-            ? 'Vercel Deployment'
+          description: process.env.PRODUCTION_URL
+            ? 'Production Deployment'
             : 'Local Server',
         },
       ],
