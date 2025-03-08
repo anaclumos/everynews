@@ -1,5 +1,22 @@
-import { boolean, integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
-import { baseSchema } from './base'
+import {
+  boolean,
+  index,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+} from 'drizzle-orm/pg-core'
+import { ulid } from 'ulid'
+
+export const baseSchema = {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => ulid()),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  deletedAt: timestamp('deleted_at'),
+}
 
 export const users = pgTable('users', {
   ...baseSchema,
@@ -118,4 +135,84 @@ export const passkeys = pgTable('passkeys', {
   deviceType: text('device_type').notNull(),
   backedUp: boolean('backed_up').notNull(),
   transports: text('transports'),
+})
+
+/**
+ * MAGAZINES
+ * - Created by a user within an organization.
+ * - Has a cron-based schedule (string) + nextRunAt for easy querying.
+ * - isPublic determines whether the magazine is visible beyond the org.
+ */
+export const magazines = pgTable(
+  'magazines',
+  {
+    ...baseSchema,
+    organizationId: text('organization_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    createdBy: text('created_by')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    title: text('title').notNull(),
+    description: text('description'),
+    schedule: text('schedule').notNull(), // e.g. cron expression
+    nextRunAt: timestamp('next_run_at'), // used to find what's due next
+    isPublic: boolean('is_public').notNull().default(false),
+  },
+  (table) => [index('magazines_next_run_at_idx').on(table.nextRunAt)],
+)
+
+/**
+ * SECTIONS
+ * - Belongs to a magazine (one-to-many).
+ * - Stores configuration in a text field (JSON as string) or you can switch to JSONB if needed.
+ */
+export const sections = pgTable(
+  'sections',
+  {
+    ...baseSchema,
+    magazineId: text('magazine_id')
+      .notNull()
+      .references(() => magazines.id, { onDelete: 'cascade' }),
+    metadata: text('metadata'), // typically stores JSON for crawling strategy, summarization, etc.
+  },
+  (table) => [index('sections_magazine_idx').on(table.magazineId)],
+)
+
+/**
+ * SUBSCRIPTIONS
+ * - Many-to-many link between users and magazines.
+ * - The creator is auto-subscribed, but other users can subscribe if allowed.
+ */
+export const subscriptions = pgTable(
+  'subscriptions',
+  {
+    ...baseSchema,
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    magazineId: text('magazine_id')
+      .notNull()
+      .references(() => magazines.id, { onDelete: 'cascade' }),
+  },
+  (table) => [
+    uniqueIndex('subscriptions_user_magazine_unique').on(
+      table.userId,
+      table.magazineId,
+    ),
+  ],
+)
+
+/**
+ * SUBSCRIPTION_CHANNELS
+ * - Each subscription can have multiple notification channels (e.g. email, phone, Slack).
+ * - channelAddress can store an email address, phone number, webhook URL, etc.
+ */
+export const subscriptionChannels = pgTable('subscription_channels', {
+  ...baseSchema,
+  subscriptionId: text('subscription_id')
+    .notNull()
+    .references(() => subscriptions.id, { onDelete: 'cascade' }),
+  channelType: text('channel_type').notNull(), // 'email', 'SMS', 'Slack', etc.
+  channelAddress: text('channel_address'), // actual address/endpoint
 })
