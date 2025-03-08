@@ -17,9 +17,9 @@
             "clusterMaxInstances": 10
           },
           "buildType": "nixpacks",
-          "installCommand": "bun install",
-          "buildCommand": "bun run build",
-          "startCommand": "bun run start",
+          "installCommand": "cd apps/engine && bun install",
+          "buildCommand": "cd apps/engine && bun run build",
+          "startCommand": "cd apps/engine && bun run start",
           "cpu": 2,
           "gpu": 0,
           "memory": 0.25,
@@ -34,7 +34,6 @@
           "minInstances": 1,
           "maxInstances": 1,
           "versionHistoryCount": 10,
-          "basePath": "./apps/engine",
           "privileged": false,
           "envVariables": {},
           "autoscaling": {
