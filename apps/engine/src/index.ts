@@ -23,11 +23,11 @@ app
     'auth/*',
     cors({
       origin: (origin) => {
-        // Allow requests from Vercel preview URLs, localhost, and production domains
+        // Allow requests from preview URLs, localhost, and production domains
         return origin &&
-          (origin.includes('vercel.app') ||
+          (origin.includes('vercel.app') || // Should change to AWS
             origin.includes('localhost') ||
-            origin === 'https://everynews.com') // Replace with your production domain
+            origin === 'https://everynews.com')
           ? origin
           : ''
       },
@@ -126,5 +126,4 @@ app.get(
   }),
 )
 
-// Export the app for Vercel
 export default app
