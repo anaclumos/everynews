@@ -11,8 +11,7 @@
     "build": "echo 'No Build Needed with Bun. This script is for Turbo and Flightcontrol.'",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "openapi:generate": "bun run src/scripts/generate-openapi.ts"
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.3",

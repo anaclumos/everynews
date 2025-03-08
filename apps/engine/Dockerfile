@@ -23,4 +23,4 @@ ENV NODE_ENV=production
 EXPOSE 3000
 
 # Run database migrations on startup and then start the server
-CMD ["sh", "-c", "bun run db:migrate && bun run start"]
+CMD ["sh", "-c", "bun run db:generate && bun run db:migrate && bun run start"]
