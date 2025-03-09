@@ -1,10 +1,6 @@
 import { handle } from 'hono/vercel'
 import app from '../src'
 
-export const config = {
-  runtime: 'edge',
-}
-
 const handler = handle(app)
 
 export const GET = handler
