@@ -2,7 +2,7 @@
   "name": "everynews-engine",
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development bun run --watch src/index.ts",
+    "dev": "NODE_ENV=development bun run --watch src/server.ts",
     "start": "vercel dev",
     "deploy": "vercel",
     "db:generate": "drizzle-kit generate",
