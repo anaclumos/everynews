@@ -1,14 +1,14 @@
 {
   "name": "everynews-engine",
   "scripts": {
-    "dev": "vercel dev",
+    "dev": "NODE_ENV=development bun run --watch src/index.ts",
+    "start": "vercel dev",
     "deploy": "vercel",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:check": "drizzle-kit check",
-    "build": "echo 'No Build Needed with Bun. This script is for Turbo and Flightcontrol.'",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
