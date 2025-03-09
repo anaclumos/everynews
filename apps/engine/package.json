@@ -1,5 +1,6 @@
 {
   "name": "everynews-engine",
+  "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development bun run --watch src/index.ts",
     "start": "vercel dev",
