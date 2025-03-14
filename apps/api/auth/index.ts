@@ -1,14 +1,15 @@
+import { db } from '@everynews/api/db'
 import { sendMagicLink } from '@everynews/api/email'
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import { admin, apiKey, openAPI, organization } from 'better-auth/plugins'
-import { magicLink } from 'better-auth/plugins'
+import {
+  admin,
+  apiKey,
+  magicLink,
+  openAPI,
+  organization,
+} from 'better-auth/plugins'
 import { passkey } from 'better-auth/plugins/passkey'
-import { db } from '../db'
-
-if (!process.env.BETTER_AUTH_SECRET) {
-  throw new Error('BETTER_AUTH_SECRET is not defined')
-}
 
 export const auth = betterAuth({
   appName: '@everynews/api/auth',
