@@ -5,96 +5,41 @@ import Elysia, { t } from 'elysia'
 import { betterAuthView } from './auth/view'
 
 const app = new Elysia()
-  .get('/healthz', () => 'OK')
+  .get('/health', () => 'OK', {
+    detail: {
+      summary: 'Health Check',
+      tags: ['Health'],
+    },
+  })
   .use(cors())
   .use(
     swagger({
       path: '/',
+      exclude: ['/json'], // Swagger itself
     }),
   )
-  .all('/api/auth/*', betterAuthView)
   .post(
     '/auth/sign-in',
-    ({ body }) => {
-      return auth.api.signInEmail({
-        body: {
-          password: body.password,
-          email: body.email,
-        },
-      })
+    ({ body }: { body: { email: string } }) => {
+      // magic link
+      return auth.api.signInMagicLink({ body, headers: {} })
     },
     {
       body: t.Object(
         {
           email: t.String(),
-          password: t.String({
-            minLength: 8,
-            description: 'User password (at least 8 characters)',
-          }),
         },
         {
-          description: 'Expected an email and password',
+          description: 'Expected an email',
         },
       ),
       detail: {
-        summary: 'Sign in the user',
-        tags: ['authentication'],
+        summary: 'Magic Link',
+        tags: ['Auth'],
       },
-    },
-  )
-  .post(
-    '/auth/register',
-    ({ body }) => {
-      return auth.api.signUpEmail({
-        body: {
-          name: body.name,
-          email: body.email,
-          password: body.password,
-        },
-      })
-    },
-    {
-      body: t.Object(
-        {
-          name: t.String(),
-          email: t.String(),
-          password: t.String({
-            minLength: 8,
-            description: 'User password (at least 8 characters)',
-          }),
-        },
-        {
-          description: 'Expected a name, email and password',
-        },
-      ),
-      detail: {
-        summary: 'Sign up the user',
-        tags: ['authentication'],
-      },
-    },
-  )
-  .get(
-    '/auth/verify/:token',
-    ({ params }: { params: { token: string } }) => {
-      return auth.api.verifyEmail({
-        query: {
-          token: params.token,
-        },
-      })
-    },
-    {
-      query: t.Object(
-        {
-          token: t.String(),
-        },
-        {
-          description: 'Expected a token',
-        },
-      ),
-      detail: {
-        summary: 'Verify the user',
-        tags: ['authentication'],
-      },
+      response: t.Object({
+        status: t.Boolean(),
+      }),
     },
   )
 

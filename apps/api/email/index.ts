@@ -1,23 +1,5 @@
 import { Resend } from 'resend'
 
-export const sendVerificationEmail = async ({
-  to,
-  subject,
-  url,
-}: { to: string; subject: string; url: string }) => {
-  const resend = new Resend(process.env.RESEND_API_KEY)
-  const { data, error } = await resend.emails.send({
-    from: 'Everynews <email@updates.every.news>',
-    to,
-    subject,
-    html: `<p>Click the link to verify your email: <a href="${url}">${url}</a></p>`,
-  })
-  if (error) {
-    throw new Error(error.message)
-  }
-  return data
-}
-
 export const sendAccountInfoEmail = async ({
   to,
   user,
@@ -27,7 +9,7 @@ export const sendAccountInfoEmail = async ({
 }) => {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const { data, error } = await resend.emails.send({
-    from: 'Everynews <email@updates.every.news>',
+    from: 'Everynews System <system@app.every.news>',
     to,
     subject: 'Your Account Info',
     html: `
@@ -48,4 +30,27 @@ export const sendAccountInfoEmail = async ({
   }
 
   return data
+}
+
+export const sendMagicLink = async ({
+  email,
+  token,
+  url,
+}: { email: string; token: string; url: string }) => {
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  const { error } = await resend.emails.send({
+    from: 'Everynews System <system@app.every.news>',
+    to: email,
+    subject: 'Your Magic Link',
+    html: `
+      <h2>Your Magic Link</h2>
+      <p>Hello ${email},</p>
+      <p>Here's your magic link:</p>
+      <a href="${url}">${url}</a>
+      <p>Thank you for reading Everynews!</p>
+    `,
+  })
+  if (error) {
+    throw new Error(error.message)
+  }
 }
