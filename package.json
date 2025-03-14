@@ -1,26 +1,29 @@
 {
-  "name": "everynews",
+  "name": "@everynews/monorepo",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "check": "bun run biome check --write",
-    "check-types": "turbo run check-types",
-    "format": "bun run biome format --write",
-    "lint": "bun run biome lint --write",
+    "check": "biome check --write",
+    "format": "biome format --write",
+    "db:migrate": "turbo run db:migrate",
+    "start": "turbo run start",
+    "lint": "biome lint --write",
     "clean": "find . -name node_modules -o -name .next -o -name .turbo -o -name dist -type d -prune | xargs rm -rf"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "^1.9.4",
     "turbo": "^2.4.4",
-    "typescript": "5.8.2"
+    "typescript": "^5.8.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
-  "packageManager": "bun@1.2.4",
-  "workspaces": ["apps/*", "packages/*"],
+  "packageManager": "bun@1.2.5",
   "dependencies": {
-    "lefthook": "^1.11.2"
-  }
+    "bun": "^1.2.5",
+    "lefthook": "^1.11.3"
+  },
+  "workspaces": ["apps/*"],
+  "trustedDependencies": ["@biomejs/biome", "bun", "esbuild", "lefthook"]
 }

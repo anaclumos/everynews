@@ -1,0 +1,32 @@
+{
+  "name": "@everynews/api",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development bun run --watch ./index.ts",
+    "build": "mkdir -p ./dist && touch ./dist/.dirstamp",
+    "start": "NODE_ENV=production bun run ./index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:check": "drizzle-kit check"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/swagger": "^1.2.2",
+    "@types/pg": "^8.11.11",
+    "better-auth": "^1.2.3",
+    "drizzle-kit": "^0.30.5",
+    "drizzle-orm": "^0.40.0",
+    "drizzle-typebox": "^0.3.0",
+    "elysia": "latest",
+    "pg": "^8.14.0",
+    "resend": "^4.1.2",
+    "ulid": "^2.3.0"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "module": "index.js"
+}

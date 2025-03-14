@@ -1,55 +1,27 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalEnv": [
-    "POSTGRES_URL",
-    "POSTGRES_PRISMA_URL",
-    "DATABASE_URL_UNPOOLED",
-    "POSTGRES_URL_NON_POOLING",
-    "PGHOST",
-    "POSTGRES_USER",
-    "DATABASE_URL",
-    "POSTGRES_PASSWORD",
-    "POSTGRES_DATABASE",
-    "PGPASSWORD",
-    "PGDATABASE",
-    "PGHOST_UNPOOLED",
-    "PGUSER",
-    "POSTGRES_URL_NO_SSL",
-    "POSTGRES_HOST"
-  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"],
+      "outputs": [".next/**", "!.next/cache/**", "./dist"]
+    },
+    "start": {
+      "dependsOn": ["^start"],
       "env": [
-        "POSTGRES_URL",
-        "POSTGRES_PRISMA_URL",
-        "DATABASE_URL_UNPOOLED",
-        "POSTGRES_URL_NON_POOLING",
-        "PGHOST",
-        "POSTGRES_USER",
+        "BETTER_AUTH_SECRET",
+        "RESEND_API_KEY",
         "DATABASE_URL",
-        "POSTGRES_PASSWORD",
-        "POSTGRES_DATABASE",
-        "PGPASSWORD",
-        "PGDATABASE",
-        "PGHOST_UNPOOLED",
-        "PGUSER",
-        "POSTGRES_URL_NO_SSL",
-        "POSTGRES_HOST"
+        "PRODUCTION_URL"
       ]
-    },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "check-types": {
-      "dependsOn": ["^check-types"]
     },
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "db:migrate": {
+      "env": ["DATABASE_URL"]
     }
   }
 }
