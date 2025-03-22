@@ -15,6 +15,7 @@
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/swagger": "^1.2.2",
+    "@everynews/util": "workspace:*",
     "@types/pg": "^8.11.11",
     "better-auth": "^1.2.4",
     "drizzle-kit": "^0.30.5",

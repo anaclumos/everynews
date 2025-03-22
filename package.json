@@ -24,6 +24,6 @@
     "bun": "^1.2.5",
     "lefthook": "^1.11.3"
   },
-  "workspaces": ["apps/*"],
+  "workspaces": ["apps/*", "packages/*"],
   "trustedDependencies": ["@biomejs/biome", "bun", "esbuild", "lefthook"]
 }
