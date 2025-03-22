@@ -7,6 +7,13 @@ new Elysia()
   .use(cors())
   .use(
     swagger({
+      documentation: {
+        openapi: '3.1.1',
+        info: {
+          version: '1.0.0',
+          title: 'Everynews API',
+        },
+      },
       path: '/',
       exclude: ['/json'], // Swagger itself
     }),
