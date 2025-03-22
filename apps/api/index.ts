@@ -1,9 +1,9 @@
 import { cors } from '@elysiajs/cors'
+import swagger from '@elysiajs/swagger'
 import Elysia from 'elysia'
 import { authRouter } from './routes/auth'
-import swagger from '@elysiajs/swagger'
 
-const app = new Elysia()
+new Elysia()
   .use(cors())
   .use(
     swagger({
@@ -20,5 +20,3 @@ const app = new Elysia()
 
   .use(authRouter)
   .listen(process.env.BACKEND_PORT || 8000)
-
-export default app
