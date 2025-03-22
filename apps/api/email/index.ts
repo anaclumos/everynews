@@ -2,9 +2,8 @@ import { Resend } from 'resend'
 
 export const sendMagicLink = async ({
   email,
-  token,
   url,
-}: { email: string; token: string; url: string }) => {
+}: { email: string; url: string }) => {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const { error } = await resend.emails.send({
     from: 'Everynews <system@app.every.news>',

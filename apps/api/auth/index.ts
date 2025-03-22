@@ -13,6 +13,7 @@ import { passkey } from 'better-auth/plugins/passkey'
 
 export const auth = betterAuth({
   appName: '@everynews/api/auth',
+  basePath: '/auth',
   secret: process.env.BETTER_AUTH_SECRET,
   database: drizzleAdapter(db, {
     provider: 'pg',
@@ -26,8 +27,6 @@ export const auth = betterAuth({
     magicLink({
       sendMagicLink,
     }),
-    openAPI({
-      disableDefaultReference: true,
-    }),
+    openAPI(),
   ],
 })
